@@ -73,7 +73,7 @@ const es = {
         },
       },
       errors: {
-        permissions: `El bot actualmente no tiene los permisos de "Enviar Mensajes" y "Ver Mensajes" para este canal, por lo que no se pueden enviar alertas. ¡Una vez que se habiliten los permisos, vuelva a ejecutar este comando!`,
+        permissions: `El bot actualmente no tiene los permisos de 'Enviar mensajes', 'Ver mensajes' y 'Insertar links' para este canal, por lo tanto, no se pueden enviar alertas. Una vez que se habiliten los permisos, ¡vuelva a ejecutar este comando!`,
       },
       messages: {
         success: '¡los eventos se publicarán en este canal! Usa `/{unsub}` para detener las publicaciones de eventos aquí. Usa el comando `/{events}` nuevamente para cambiar tu configuración.',
@@ -126,6 +126,16 @@ const es = {
         notFound: '¡entrada de codex no encontrada!',
       },
     },
+    panel: {
+      name: 'panel',
+      description: 'crear un panel que muestre los horarios de eventos mundiales',
+      options: {},
+    },
+    season: {
+      name: 'temporada',
+      description: 'obtener información sobre la temporada próxima/actual',
+      options: {},
+    },
     skill: {
       name: 'habilidad',
       description: 'encuentra una habilidad por nombre',
@@ -142,7 +152,12 @@ const es = {
     unsub: {
       name: 'unsub',
       description: 'cancela la suscripción a las actualizaciones de marea infernal y jefe mundial',
-      options: {}
+      options: {
+				channelId: {
+					name: 'canal',
+					description: 'canal ID'
+				}
+			}
     },
     xpCurve: {
       name: 'xp-curve',
@@ -160,7 +175,7 @@ const es = {
         chestsRespawnLabel: 'Los cofres reaparecen:',
         startLabel: 'Comienza:',
         endLabel: 'Termina:',
-        locationUrl: 'ubicaciones de los cofres en {location}'
+        locationUrl: 'Ubicaciones de los cofres en {location}'
       },
       worldBoss: {
         title: '¡{name} se está agitando en {location}!',
@@ -182,7 +197,7 @@ const es = {
       ashava: 'Ashava',
     },
     map: {
-      sanctuary: 'Sanctuary',
+      sanctuary: 'Santuario',
       territories: {
         dilapidatedAqueducts: 'Acueductos Dilapidados',
         hauntedWreckage: 'Restos Embrujados',
@@ -194,6 +209,9 @@ const es = {
         caenAdar: 'Caen Adar',
         fieldsOfDesecration: 'Campos de Desecración',
         searedBasin: 'Cuenca Quemada',
+        theCrucible: 'El Crisol',
+				carrowcrestRuins: 'Ruinas de Carrowcrest',
+				alcarnus: 'Alcarnus',
       },
       zones: {
         kehjistan: 'Kehjistan',

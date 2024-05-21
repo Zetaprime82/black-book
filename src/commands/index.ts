@@ -10,6 +10,8 @@ import events, { eventsBuilder } from "./events";
 import hellTide, { hellTideBuilder } from "./hellTide";
 import nightmareTier, { nightmareTierBuilder } from "./nightmareTier";
 import nightmareLevel, { nightmareLevelBuilder } from "./nightmareLevel";
+import panel, { panelBuilder } from "./panel";
+import season, { seasonBuilder } from "./season";
 import xpCurve, { xpCurveBuilder } from "./xpCurve";
 import { SlashCommandBuilder, SlashCommandSubcommandsOnlyBuilder } from "discord.js";
 import unsub, { unsubBuilder } from "./unsub";
@@ -22,8 +24,10 @@ const builders = [
   codexBuilder,
   eventsBuilder,
   unsubBuilder,
+  panelBuilder,
   configBuilder,
   paragonBuilder,
+  seasonBuilder,
   hellTideBuilder,
   nightmareTierBuilder,
   nightmareLevelBuilder,
@@ -48,6 +52,8 @@ export const commands = {
     const eventsCommand = events(db);
     const unsubCommand = unsub(db);
     const helpCommand = help(builders);
+    const panelCommand = panel(db);
+    const seasonCommand = season();
     [
       skillCommand,
       codexCommand,
@@ -62,6 +68,8 @@ export const commands = {
       xpCurveCommand,
       eventsCommand,
       unsubCommand,
+      panelCommand,
+      seasonCommand,
     ].map(command => {
       client.commands.set(command.name, command);
     })

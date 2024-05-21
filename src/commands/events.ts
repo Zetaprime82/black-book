@@ -9,8 +9,10 @@ import {
 } from 'discord.js';
 import { dbWrapper } from '../bot';
 import L from '../i18n/i18n-node';
-import { LocaleMappingEntry, SupportedLocale, commandLocaleMapping } from '../i18n/type-transformer';
+import { LocaleMappingEntry, commandLocaleMapping } from '../i18n/type-transformer';
 import { filterNulls } from '../utility/database';
+import panelView from '../views/panel';
+import { getEvents } from '../utility/getEvents';
 
 const name = L.en.commands.events.name();
 
@@ -128,13 +130,13 @@ const events = (db: dbWrapper) => ({
   name,
   execute: async (interaction: ChatInputCommandInteraction<CacheType>, locale: LocaleMappingEntry) => {
     if ( !db ) {
-      interaction.reply('db not initialized');
+      await interaction.reply('db not initialized');
       return;
     }
 
     if (interaction.channel && interaction.guild?.members.me && interaction.channel.isTextBased() && !interaction.channel.isDMBased()) {
-      if (!interaction.guild.members.me.permissionsIn(interaction.channel).has([PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel])) {
-        interaction.reply(L.en.commands.events.errors.permissions());
+      if (!interaction.guild.members.me.permissionsIn(interaction.channel).has([PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel, PermissionsBitField.Flags.EmbedLinks])) {
+        await interaction.reply(L.en.commands.events.errors.permissions());
         return;
       }
     }
@@ -180,15 +182,23 @@ const events = (db: dbWrapper) => ({
       .select();
     if (upsertError) {
       console.error(upsertError);
-      interaction.reply('something went wrong!');
+      await interaction.reply('something went wrong!');
       return;
     }
-    console.log(locale.locale);
     const entries = L[locale.locale];
-    interaction.reply(entries.commands.events.messages.success({
+    await interaction.reply(entries.commands.events.messages.success({
       unsub: entries.commands.unsub.name(),
       events: entries.commands.events.name()
     }));
+
+    const events = await getEvents();
+    if (!events) {
+      return;
+    }
+
+    const embeds = panelView(events, locale.locale, true);
+
+    interaction.channel?.send({ embeds });
   },
 });
 

@@ -10,6 +10,7 @@ import { helltideUpdateCheck } from "../utility/helltideUpdateCheck";
 import { toErrorWithMessage } from "../utility/errorHelper";
 import { Locales } from "../i18n/i18n-types";
 import { parseLocaleString } from "../i18n/type-transformer";
+import updatePanels from "../utility/updatePanels";
 
 export enum EventType {
   WorldBoss = 'worldBoss',
@@ -179,6 +180,7 @@ const scanAndNotifyForEvent = async (
   const metadata = await beforeNotify();
   if (metadata == null) return;
   sendNotifications(event, row, client, db, metadata);
+  setTimeout(() => updatePanels(client, db), Number.parseInt(process.env.PANEL_DELAY || '0', 10));
 }
 
 const checkForEvents = async (client: ClientAndCommands, db: NonNullable<dbWrapper>) => {
@@ -232,7 +234,7 @@ const expectedErrors = [
   'Missing Permissions'
 ];
 
-const attemptToSendMessage = async (channel: TextBasedChannel, event: EventParams, sub: SubRecord, metadata: NotificationMetadata) => {
+const attemptToSendMessage = async (channel: TextBasedChannel, event: EventParams, sub: SubRecord, metadata: NotificationMetadata, db: NonNullable<dbWrapper>) => {
   const eventView = getView(event.type);
   try {
     return await channel.send({ embeds: eventView(event, metadata, sub), content: mentionContent(event.type, sub) });
@@ -240,6 +242,7 @@ const attemptToSendMessage = async (channel: TextBasedChannel, event: EventParam
     const errorWithMessage = toErrorWithMessage(error);
     if(expectedErrors.some(x => errorWithMessage.message === x)) {
       console.error(`no channel access: ${sub.channel_id}`);
+      await disableSubById(sub.id, db);
     } else {
       console.error(`Error sending event to ${JSON.stringify(sub)}`);
       console.error(error);
@@ -253,8 +256,11 @@ export type NotificationMetadata = {
   isUpdated: boolean,
 }
 
-const getLocales = async (db: NonNullable<dbWrapper>) => {
-  const { data, error } = await db.from('guilds').select('guild_id, locale').filter('locale', 'not.eq', Locale.EnglishUS);
+// just doing this join in memory, for now. Reevalute if non-us count grows
+export const getLocales = async (db: NonNullable<dbWrapper>) => {
+  const { data, error } = await db.from('guilds').select('guild_id, locale')
+    .filter('locale', 'not.eq', Locale.EnglishUS)
+    .filter('locale', 'not.eq', Locale.EnglishGB);
   if (error) {
     throw 'error fetching locales';
   }
@@ -264,17 +270,32 @@ const getLocales = async (db: NonNullable<dbWrapper>) => {
   }), {} as mapping);
 };
 
+const disableSubById = async (id: number, db: NonNullable<dbWrapper>) => {
+  const { error } = await db.from('subscriptions').update({ disabled: true }).filter('id', 'eq', id);
+  if (error) {
+    console.error('error disabling sub');
+    console.error(error);
+  }
+}
+
 const sendNotifications = async (event: EventParams, row: EventRecord, client: ClientAndCommands, db: NonNullable<dbWrapper>, metadata: NotificationMetadata) => {
-  const { data } = await db.from('subscriptions').select().filter(event.type.toLowerCase(), 'eq', true);
-  const localeMap = await getLocales(db); // just doing this join in memory, for now. Reevalute if non-us count grows
+  const { data } = await db.from('subscriptions').select()
+    .filter(event.type.toLowerCase(), 'eq', true)
+    .filter('disabled', 'eq', false);
+  const localeMap = await getLocales(db);
   data?.map(async sub => {
-    const { channel_id: channelId } = sub;
+    const { channel_id: channelId, id } = sub;
     const channel = client.channels.cache.get(channelId);
-    if (!channel || !channel.isTextBased()) return; // todo - check for missing channels here to clean up old subs
+
+    if (!channel || !channel.isTextBased()) {
+      console.log(`disabling sub ${id} with missing channel ${channelId}`);
+      await disableSubById(id, db);
+      return;
+    }
 
     const locale = parseLocaleString(localeMap[sub.guild_id]);
 
-    const message = await attemptToSendMessage(channel, event, { locale, ...sub }, metadata);
+    const message = await attemptToSendMessage(channel, event, { locale, ...sub }, metadata, db);
 
     if (!message) return;
 

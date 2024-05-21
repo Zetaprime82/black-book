@@ -9,6 +9,7 @@ export type Locales =
 	| 'br'
 	| 'en'
 	| 'es'
+	| 'fr'
 	| 'gb'
 
 export type Translation = RootTranslation
@@ -27,7 +28,7 @@ type RootTranslation = {
 			 */
 			name: string
 			/**
-			 * g​e​t​ ​g​e​n​e​r​a​l​ ​i​n​f​o​ ​a​b​o​u​t​ ​t​h​e​ ​b​o​t
+			 * g​e​t​ ​g​e​n​e​r​a​l​ ​i​n​f​o​r​m​a​t​i​o​n​ ​a​b​o​u​t​ ​t​h​e​ ​b​o​t
 			 */
 			description: string
 			options: {
@@ -77,7 +78,7 @@ type RootTranslation = {
 					 */
 					name: string
 					/**
-					 * s​e​t​ ​t​h​e​ ​l​o​c​a​l​e​ ​f​o​r​ ​b​o​t​ ​i​n​ ​t​h​i​s​ ​s​e​r​v​e​r
+					 * c​h​a​n​g​e​ ​t​h​e​ ​l​o​c​a​l​e​ ​o​f​ ​t​h​i​s​ ​b​o​t​ ​f​o​r​ ​y​o​u​r​ ​s​e​r​v​e​r
 					 */
 					description: string
 				}
@@ -186,7 +187,7 @@ type RootTranslation = {
 			}
 			errors: {
 				/**
-				 * T​h​e​ ​b​o​t​ ​d​o​e​s​n​'​t​ ​c​u​r​r​e​n​t​l​y​ ​h​a​v​e​ ​t​h​e​ ​"​S​e​n​d​ ​M​e​s​s​a​g​e​s​"​ ​a​n​d​ ​"​V​i​e​w​ ​M​e​s​s​a​g​e​s​"​ ​p​e​r​m​i​s​s​i​o​n​ ​f​o​r​ ​t​h​i​s​ ​c​h​a​n​n​e​l​,​ ​s​o​ ​a​l​e​r​t​s​ ​c​a​n​'​t​ ​b​e​ ​s​e​n​t​.​ ​O​n​c​e​ ​p​e​r​m​i​s​s​i​o​n​s​ ​a​r​e​ ​e​n​a​b​l​e​d​,​ ​r​e​r​u​n​ ​t​h​i​s​ ​c​o​m​m​a​n​d​!
+				 * T​h​e​ ​b​o​t​ ​d​o​e​s​n​'​t​ ​c​u​r​r​e​n​t​l​y​ ​h​a​v​e​ ​t​h​e​ ​"​S​e​n​d​ ​M​e​s​s​a​g​e​s​"​,​ ​"​V​i​e​w​ ​M​e​s​s​a​g​e​s​"​,​ ​a​n​d​ ​"​E​m​b​e​d​ ​L​i​n​k​s​"​ ​p​e​r​m​i​s​s​i​o​n​s​ ​f​o​r​ ​t​h​i​s​ ​c​h​a​n​n​e​l​,​ ​s​o​ ​a​l​e​r​t​s​ ​c​a​n​'​t​ ​b​e​ ​s​e​n​t​.​ ​O​n​c​e​ ​p​e​r​m​i​s​s​i​o​n​s​ ​a​r​e​ ​e​n​a​b​l​e​d​,​ ​r​e​r​u​n​ ​t​h​i​s​ ​c​o​m​m​a​n​d​!
 				 */
 				permissions: string
 			}
@@ -205,7 +206,7 @@ type RootTranslation = {
 			 */
 			name: string
 			/**
-			 * d​i​s​p​l​a​y​ ​m​a​p​ ​a​n​d​ ​i​n​f​o​ ​a​b​o​u​t​ ​h​e​l​l​ ​t​i​d​e​s
+			 * d​i​s​p​l​a​y​ ​m​a​p​ ​a​n​d​ ​i​n​f​o​ ​a​b​o​u​t​ ​h​e​l​l​t​i​d​e​s
 			 */
 			description: string
 			options: {
@@ -217,7 +218,7 @@ type RootTranslation = {
 			 */
 			name: string
 			/**
-			 * s​h​o​w​ ​a​ ​l​i​s​t​ ​o​f​ ​a​v​a​i​l​b​l​e​ ​c​o​m​m​a​n​d​s
+			 * s​h​o​w​ ​a​ ​l​i​s​t​ ​o​f​ ​a​v​a​i​l​a​b​l​e​ ​c​o​m​m​a​n​d​s
 			 */
 			description: string
 			options: {
@@ -307,6 +308,30 @@ type RootTranslation = {
 				notFound: string
 			}
 		}
+		panel: {
+			/**
+			 * p​a​n​e​l
+			 */
+			name: string
+			/**
+			 * c​r​e​a​t​e​ ​a​ ​p​a​n​e​l​ ​w​h​i​c​h​ ​s​h​o​w​s​ ​w​o​r​l​d​ ​e​v​e​n​t​ ​t​i​m​e​s
+			 */
+			description: string
+			options: {
+			}
+		}
+		season: {
+			/**
+			 * s​e​a​s​o​n
+			 */
+			name: string
+			/**
+			 * g​e​t​ ​i​n​f​o​r​m​a​t​i​o​n​ ​a​b​o​u​t​ ​t​h​e​ ​u​p​c​o​m​i​n​g​ ​o​r​ ​c​u​r​r​e​n​t​ ​s​e​a​s​o​n
+			 */
+			description: string
+			options: {
+			}
+		}
 		skill: {
 			/**
 			 * s​k​i​l​l
@@ -345,6 +370,16 @@ type RootTranslation = {
 			 */
 			description: string
 			options: {
+				channelId: {
+					/**
+					 * c​h​a​n​n​e​l
+					 */
+					name: string
+					/**
+					 * c​h​a​n​n​e​l​ ​I​D
+					 */
+					description: string
+				}
 			}
 		}
 		xpCurve: {
@@ -373,7 +408,7 @@ type RootTranslation = {
 				 */
 				updatePending: string
 				/**
-				 *  ​(​i​m​a​g​e​ ​u​d​p​a​t​e​d​)
+				 *  ​(​i​m​a​g​e​ ​u​p​d​a​t​e​d​)
 				 */
 				updateDone: string
 				/**
@@ -492,6 +527,18 @@ type RootTranslation = {
 				 * S​e​a​r​e​d​ ​B​a​s​i​n
 				 */
 				searedBasin: string
+				/**
+				 * T​h​e​ ​C​r​u​c​i​b​l​e
+				 */
+				theCrucible: string
+				/**
+				 * C​a​r​r​o​w​c​r​e​s​t​ ​R​u​i​n​s
+				 */
+				carrowcrestRuins: string
+				/**
+				 * A​l​c​a​r​n​u​s
+				 */
+				alcarnus: string
 			}
 			zones: {
 				/**
@@ -531,7 +578,7 @@ export type TranslationFunctions = {
 			 */
 			name: () => LocalizedString
 			/**
-			 * get general info about the bot
+			 * get general information about the bot
 			 */
 			description: () => LocalizedString
 			options: {
@@ -581,7 +628,7 @@ export type TranslationFunctions = {
 					 */
 					name: () => LocalizedString
 					/**
-					 * set the locale for bot in this server
+					 * change the locale of this bot for your server
 					 */
 					description: () => LocalizedString
 				}
@@ -690,7 +737,7 @@ export type TranslationFunctions = {
 			}
 			errors: {
 				/**
-				 * The bot doesn't currently have the "Send Messages" and "View Messages" permission for this channel, so alerts can't be sent. Once permissions are enabled, rerun this command!
+				 * The bot doesn't currently have the "Send Messages", "View Messages", and "Embed Links" permissions for this channel, so alerts can't be sent. Once permissions are enabled, rerun this command!
 				 */
 				permissions: () => LocalizedString
 			}
@@ -707,7 +754,7 @@ export type TranslationFunctions = {
 			 */
 			name: () => LocalizedString
 			/**
-			 * display map and info about hell tides
+			 * display map and info about helltides
 			 */
 			description: () => LocalizedString
 			options: {
@@ -719,7 +766,7 @@ export type TranslationFunctions = {
 			 */
 			name: () => LocalizedString
 			/**
-			 * show a list of availble commands
+			 * show a list of available commands
 			 */
 			description: () => LocalizedString
 			options: {
@@ -809,6 +856,30 @@ export type TranslationFunctions = {
 				notFound: () => LocalizedString
 			}
 		}
+		panel: {
+			/**
+			 * panel
+			 */
+			name: () => LocalizedString
+			/**
+			 * create a panel which shows world event times
+			 */
+			description: () => LocalizedString
+			options: {
+			}
+		}
+		season: {
+			/**
+			 * season
+			 */
+			name: () => LocalizedString
+			/**
+			 * get information about the upcoming or current season
+			 */
+			description: () => LocalizedString
+			options: {
+			}
+		}
 		skill: {
 			/**
 			 * skill
@@ -847,6 +918,16 @@ export type TranslationFunctions = {
 			 */
 			description: () => LocalizedString
 			options: {
+				channelId: {
+					/**
+					 * channel
+					 */
+					name: () => LocalizedString
+					/**
+					 * channel ID
+					 */
+					description: () => LocalizedString
+				}
 			}
 		}
 		xpCurve: {
@@ -874,7 +955,7 @@ export type TranslationFunctions = {
 				 */
 				updatePending: () => LocalizedString
 				/**
-				 *  (image udpated)
+				 *  (image updated)
 				 */
 				updateDone: () => LocalizedString
 				/**
@@ -987,6 +1068,18 @@ export type TranslationFunctions = {
 				 * Seared Basin
 				 */
 				searedBasin: () => LocalizedString
+				/**
+				 * The Crucible
+				 */
+				theCrucible: () => LocalizedString
+				/**
+				 * Carrowcrest Ruins
+				 */
+				carrowcrestRuins: () => LocalizedString
+				/**
+				 * Alcarnus
+				 */
+				alcarnus: () => LocalizedString
 			}
 			zones: {
 				/**
